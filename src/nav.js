@@ -1,21 +1,22 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-const _Nav = (props) => {
-    const {groceries} = props
-    console.log(groceries)
+const _Nav = ({groceries,view}) => {
         return(
             <div id='nav'>
-                <p className='navitem'>All({groceries.length})</p>
-                <p className='navitem'>Need</p>
-                <p className='navitem'>Purchased</p>
+                <a href='#' className= {!view?'navitem selected':'navitem'}>All({groceries.length})</a>
+                <a className = {view==='need'?'navitem selected':'navitem'} href='#need'>Need({groceries.filter(_=>!_.purchased).length})</a>
+                <a className = {view==='purchased'?'navitem selected':'navitem'} href='#purchased'>Purchased({groceries.filter(_=>_.purchased).length})</a>
             </div>
         )
 }
 
 
-const mapStateToProps = (state) => {
-    return state;
+const mapStateToProps = ({groceries,view}) => {
+    return {
+        groceries,
+        view
+    };
 }
 
 const Nav = connect(mapStateToProps)(_Nav)
